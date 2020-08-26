@@ -25,6 +25,7 @@ module.exports = {
   },
   plugins: ['react'],
   rules: {
+    'import/prefer-default-export': 0,
     'import/no-extraneous-dependencies': 0,
     'import/no-unresolved': 1,
     'react/jsx-filename-extension': [
