@@ -43,7 +43,8 @@
     "husky": "^4.2.5",
     "lint-staged": "^10.2.13",
     "prettier": "^2.1.0",
-    "react-is": "^16.13.1"
+    "react-is": "^16.13.1",
+    "storybook-react-router": "^1.0.8"
   },
   "husky": {
     "hooks": {
