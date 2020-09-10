@@ -1,4 +1,4 @@
-import React , {Component} from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import UserPageTemplate from 'templates/UserPageTemplate';
@@ -7,18 +7,48 @@ import Heading from 'components/atoms/Heading/Heading';
 import Paragraph from 'components/atoms/Paragraph/Paragraph';
 import ButtonIcon from 'components/atoms/ButtonIcon/ButtonIcon';
 import NewItemBar from 'components/organism/NewItemBar/NewItemBar';
-import withContext from 'hoc/withContext';
 import plusIcon from 'assets/icons/plus.svg';
+import withContext from 'hoc/withContext';
+import { connect } from 'react-redux';
 
 const StyledWrapper = styled.div`
   position: relative;
   padding: 25px 150px 25px 70px;
 `;
 
+const StyledLoadingIndicator = styled(Heading)`
+  font-size: 3em;
+  color: white;
+  position: fixed;
+  top: 40vh;
+  left: 40%;
+  z-index: 10001;
+
+  ::before {
+    content: '';
+    z-index: -1;
+    background-color: rgba(0, 0, 0, 0.5);
+    position: absolute;
+    width: 300vw;
+    height: 200vh;
+    top: -100vh;
+    left: -100vw;
+  }
+`;
+
 const StyledGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 85px;
+
+  @media (max-width: 1500px) {
+    grid-gap: 45px;
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (max-width: 1100px) {
+    grid-template-columns: 1fr;
+  }
 `;
 
 const StyledPageHeader = styled.div`
@@ -45,7 +75,7 @@ const StyledButtonIcon = styled(ButtonIcon)`
   background-color: ${({ activecolor, theme }) => theme[activecolor]};
   background-size: 35%;
   border-radius: 50px;
-  z-index: 100;
+  z-index: 10000;
 `;
 
 class GridTemplate extends Component {
@@ -60,12 +90,13 @@ class GridTemplate extends Component {
   };
 
   render() {
-    const { children, pageContext } = this.props;
+    const { children, pageContext, isLoading } = this.props;
     const { isNewItemBarVisible } = this.state;
 
     return (
       <UserPageTemplate>
         <StyledWrapper>
+          {isLoading && <StyledLoadingIndicator>Loading</StyledLoadingIndicator>}
           <StyledPageHeader>
             <Input search placeholder="Search" />
             <StyledHeading big as="h1">
@@ -95,4 +126,8 @@ GridTemplate.defaultProps = {
   pageContext: 'notes',
 };
 
-export default withContext(GridTemplate);
+const mapStateToProps = ({ isLoading }) => ({
+  isLoading,
+});
+
+export default connect(mapStateToProps)(withContext(GridTemplate));

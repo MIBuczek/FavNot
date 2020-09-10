@@ -14,11 +14,12 @@ const GlobalStyle = createGlobalStyle`
         font-size: 62.5%;
         /* happy rems */
     }
-    body{
-        padding-left: 150px;
-        font-family: 'Montserrat', sans-serif;
-        font-size: 1.6rem
-    }
+    body {
+        margin: 0;
+        padding: 0;
+        font-size: 1.6rem;
+        font-family: "Montserrat", sans-serif;
+     }
 `;
 
 export default GlobalStyle;
